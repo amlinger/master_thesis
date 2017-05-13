@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 80 line marker %%%%%%%%%%%%%%%
+Clustering and classification of data are two closely related subjects, 
+that can utilize methodologies that diverge more or less. In this thesis 
+various clustering methods consisting of representatives from different
+algorithm families have been evaluated based on their suitability for 
+life-logging devices, and in particular, the Narrative Clip. Bayesian 
+inference has then been used for classification of the activities detected 
+by the clustering algorithms, allowing labels to be attached to each 
+activity. 
+
+%CLUSTERING
+Comparing produced clusters and expecting exact similarity between different
+algorithms is not a good approach. As mentioned early in this report, 
+there is no universal definition of a cluster and therefore no universal 
+clustering algorithm. Taking this into account, it is a better approach to
+venture beyond strict similarity in produced clustering, and compare other 
+metrics, such as number of detected cluster, performance, Silhouettes and so
+on. But the most important examination point is the cluster algorithms 
+characteristics and abilities, basically what it was meant to do.
+
+CLARANS was the representative from the category of partitioning clustering 
+methods. While partitioning methods in general are easy to implement and to 
+understand, they have drawbacks that are significant, embodied by the results 
+of CLARANS. The performance is poor due to the knowledge about the number of 
+clusters being a prerequisite, requiring several runs of the algorithm and 
+evaluating the result. Choosing the clustering parameters for CLARANS is 
+unintuitive, since it is based on random search of a solution graph, and may 
+find different solutions to the same problem, with varying quality. Bearing 
+all this in mind, partitioning methods and particularly CLARANS seem 
+inappropriate for life-logging applications, as the knowledge of the number
+of clusters that exist on beforehand is a luxury that we usually do not have.
+The execution time necessary to find the appropriate number of clusters
+make usage of this not feasible, as it is implied by being automatic, that
+this should be used in real-time.
+
+DBSCAN performs well in run time, both for small and for large sets of data 
+points. The choice of clustering parameters affects the amount of clusters, 
+and the type of clusters one is willing to find. In the tested configuration, 
+the algorithm seems most suitable for finding a little bit more fuzzy clusters
+containing a rough position and outline, but not necessarily sorted by time. 
+This is useful in activity detection, where a more neatly presented and 
+approximated cluster is more appreciated and easier to use for a 
+classification algorithm.
+
+SLINK runs slightly faster than DBSCAN in the considered test cases, and 
+is more flexible in the way it produces clusters. This allows for clusters to 
+be cutoffs in a time-line, which is suitable for Moment detection, where a more 
+strict definition of a cluster is required. The same could be said for several 
+other applications, where time or other factors need to be sorted in first hand 
+to produce clusters. 
+
+This yields two different areas where DBSCAN and SLINK are applicable, in
+activity detection and in Moment division, respectively. Life-logging is in 
+its essence full of data mining problems that needs to be solved, and utilizing
+these or other algorithms on other problems is very likely, but examining the
+entire life-logging area is not within the scope of this article. The conclusion
+is just that these two applications is appropriate for these two problems.
+
+Silhouettes are not a simple metric to use when evaluating different types of
+clustering algorithm, due to the different definitions of a cluster and the
+varying output from the algorithm. Although not being able to simply compare
+numbers in order of determining quality of a clustering algorithms produced
+output, Silhouettes could still be useful to examine how an algorithm behaves,
+and why the produced result look the way they do. 
+
+% CLASSIFICATION
+
+When it comes to classification, the results seem somewhat individualized, 
+both when it comes to what users think is important regarding assigned classes, 
+and especially the model parameters determining the classes. 
+
+From a simple model promising results were achieved, when allowing an iterative 
+approach in a Bayesian manner. After all, there is nothing more Bayesian than 
+updating beliefs after witnessing evidence! The used model was made simple to 
+make it easy to perform an update step, thus showing that this improved the 
+quality of the output significantly. 
+
+Model changes, even seemingly small, are more powerful than Bayesian learning 
+via learning data and model fitting. In this thesis, a rather small set of
+learning data was used, due to both time and resource constraints. This caused
+parameters not to be set too robustly, especially parameters with great 
+variance suffered by not being able to converge fast enough. From this, we 
+learn that studying the parameter values is important as well after learning
+to be confident in a model.
+
+\section{Further Research}
+This report presents an overview for clustering and classification, and 
+discusses suitability of some methods as well as identifying pitfalls. 
+Life-logging in its essence is about in an automated fashion storing 
+activities for the monitored object, in Narrative's case, the end user. 
+This usually results in vast amounts of data that needs to be processed 
+in order of retrieving summaries or more qualitative data. Everything 
+that automates and improves the process of automation is interesting to
+this area, as it improves the quality of service. 
+
+Investigating model learning and Bayesian network learning would be an 
+interesting next step for taking the automated process one step further.
+
+\subsubsection{Phone coupling}
+As of now, the GPS data obtained by the Clip is rather sporadic, and
+not very accurate. Phones today are 
+however better at positioning, and utilizes other methods such as 
+WiFi for a better positioning approximation \cite{iphone-wifi}.
+
+It does also seem likely that a user carries his or her phone while 
+wearing the Clip, and making use of this data should lead to a 
+more quantitative and qualitative positional data, in its turn 
+simplifying and making the result of clustering more useful to the
+end users. Examining what more quantitative and qualitative data 
+produces from a starting point is appealing.
+
+\subsubsection{Momentification}
+Introducing other clustering factors than geo-spatial data and 
+time labels seem feasible as well, and especially monitoring 
+statistical breakpoints in sensor-data proves especially promising. 
+To introduce this either as another dimension in the clustering data, 
+or correlation the detected geo-spatial clusters with the proposed 
+clusters based on statistical breakpoints.
+
+\subsubsection{Dynamic Learning}
+An interesting approach for extending the classification would be to
+introduce dynamic learning for the classification algorithm. As is 
+stated previously, the model parameters seem somewhat individualized, 
+and making these depend on user feedback. Such feedback can both 
+come in the form of explicit evaluations on a web-based service, or 
+by observing user behaviour and assessing whether certain actions are
+a positive or a negative stimuli.

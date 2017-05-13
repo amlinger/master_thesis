@@ -1,0 +1,143 @@
+%\documentclass[cropmarks, frame, swedish, english]{idamasterthesis}
+\documentclass[swedish, english]{idamasterthesis}
+%\documentclass[12pt]{idamasterthesis}
+%\usepackage[utf8]{inputenc}
+
+% Using BibTex for referencing. The following comands are used, and means:
+% style   = numeric :
+% natbib  = true    :
+% backend = biber   :
+\usepackage[style=numeric,natbib=true,backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{caption}
+\usepackage{subcaption}
+
+\newcommand{\repeatcaption}[2]{%
+  \renewcommand{\thefigure}{\ref{#1}}%
+  \captionsetup{list=no}%
+  \caption{#2 (repeated from page \pageref{#1})}%
+}
+
+% Used for importing the appendix package along with the encironment.
+\usepackage[toc,page]{appendix}
+
+\usepackage{rotating}
+
+% Enables more powerful math formulas and theorems.
+\usepackage{amsmath}
+
+% Below is all environments for using theorems defined. If defined as
+% \newtheorem{mytheorem}{My Theorem}
+%
+% These can later on be used by
+% \begin{mytheorem}
+%   Theorem of some sort here...
+% \end{mytheorem}
+%
+% Whereas "My Theorem" will be printed in front. 
+% numberby provides sectionwise numbering. 
+%
+\newtheorem{definition}{Definition}[section]
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+\newcommand*\cleartoleftpage{%
+  \clearpage
+  \ifodd\value{page}\hbox{}\newpage\fi
+}
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage[autostyle]{csquotes}  
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+    language=Python,
+    basicstyle=\ttm,
+    otherkeywords={self},             % Add keywords here
+    keywordstyle=\ttb\color{deepblue},
+    emph={MyClass,__init__},          % Custom highlighting
+    emphstyle=\ttb\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    %backgroundcolor=\color{light-gray},
+    tabsize=1,
+    % frame=tb,                         % Any extra options here
+    showstringspaces=false            % 
+}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+    \pythonstyle
+    \lstset{#1}
+}{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+    \pythonstyle
+    \lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand{\ordo}[1]{$\mathcal{O}(#1)$}
+
+\begin{document}
+
+\newcounter{question}
+
+%\setcounter{tocdepth}{1}
+
+\makeintropages
+
+\chapter{Introduction}
+\label{ch:introduction}
+\input{chapters/introduction}
+
+\chapter{Method}
+\label{ch:method}
+\input{chapters/method}
+
+\chapter{Result}
+\label{ch:result}
+\input{chapters/result}
+
+\chapter{Discussion}
+\label{ch:discussion}
+\input{chapters/discussion}
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+\input{chapters/conclusion}
+
+\printbibliography
+
+\begin{appendices}
+
+\addtocontents{toc}{\setcounter{tocdepth}{0}}
+
+\chapter{Clustering Theory}
+\label{app:clustering-algorithms-theory}
+\input{appendices/cluster_theory}
+
+\chapter{Larger figures}
+\label{app:larger-figures}
+\input{appendices/figures}
+
+\end{appendices}
+\addtocontents{toc}{\setcounter{tocdepth}{3}}
+
+\end{document}
